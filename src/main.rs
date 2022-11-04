@@ -1,10 +1,12 @@
-use std::path::Path;
+mod proxy;
+
 use clap::{Parser, Subcommand};
-use warp::{Filter, Rejection};
+use std::path::Path;
 
 use rick_and_morty::{character, episode, location};
 use securestore::{ErrorKind, KeySource, SecretsManager};
 
+use crate::proxy::Proxy;
 use thiserror::Error;
 use uuid::Uuid;
 
@@ -19,7 +21,7 @@ pub enum Error {
     #[error("Record does not exist")]
     RecordNotFound,
     #[error("Unknown error occurred")]
-    Unknown
+    Unknown,
 }
 
 #[derive(Parser)]
@@ -64,9 +66,7 @@ async fn main() -> Result<()> {
             if let Some(id) = id {
                 println!(
                     "Episode: {:?} ",
-                    episode::get(id)
-                        .await
-                        .map_err(|_| Error::RecordNotFound)?
+                    episode::get(id).await.map_err(|_| Error::RecordNotFound)?
                 );
             } else {
                 println!(
@@ -81,9 +81,7 @@ async fn main() -> Result<()> {
             if let Some(id) = id {
                 println!(
                     "Location: {:?} ",
-                    location::get(id)
-                        .await
-                        .map_err(|_| Error::RecordNotFound)?
+                    location::get(id).await.map_err(|_| Error::RecordNotFound)?
                 );
             } else {
                 println!(
@@ -94,27 +92,19 @@ async fn main() -> Result<()> {
                 );
             }
         }
-        Commands::SignUp {keyword} => sign_up(keyword)?,
-        Commands::Proxy => {
-            let routes = warp::any().and_then(|| async {
-                let res = location::get(1).await.unwrap();
-                Ok::<String, Rejection>(serde_json::to_string(&res).unwrap())
-            });
-
-            warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
-            println!("shutting down..");
-        }
+        Commands::SignUp { keyword } => sign_up(keyword)?,
+        Commands::Proxy => Proxy::new().run().await?,
     }
 
     Ok(())
 }
 
-
 fn sign_up(mut keyword: String) -> Result<()> {
     let mut manager = SecretsManager::load(
-        Path::new("api-keys.json"),
-        KeySource::Path(Path::new("secret.key"))
-    ).map_err(|_| Error::Unknown)?;
+        Path::new(proxy::JSON_API_KEYS_PATH),
+        KeySource::Path(Path::new(proxy::SECRET_KEY_PATH)),
+    )
+    .map_err(|_| Error::Unknown)?;
 
     if let Err(ErrorKind::SecretNotFound) = manager.get(&keyword).map_err(|e| e.kind()) {
         let api_key = Uuid::new_v4().simple().to_string();

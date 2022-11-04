@@ -14,3 +14,4 @@ rick-and-morty = { git = "https://github.com/kckeiks/rick-and-morty" }
 securestore = "0.100"
 uuid = { version = "1.2", features = ["v4"] }
 thiserror = "1.0"
+lru = "0.8"
