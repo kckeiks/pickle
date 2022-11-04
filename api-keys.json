@@ -7,6 +7,11 @@
     "payload": "nFKaXDdKPiuP12jiC/xgycMBOc0d7JZHvgGP05wAFsmMkCDUNvHUAb8O/nLT6q06"
   },
   "secrets": {
+    "bob": {
+      "iv": "z4KBQ83aAXMcL+er1TiQ8A==",
+      "hmac": "eQA4UNpFlgR8aRS0zGklDtbLeUI=",
+      "payload": "33iZ9CYAikxN5IkZdVhub+PODUFORF85PeHm0wudpAQK38DFYolynG4QZLxm5PG3"
+    },
     "ricky": {
       "iv": "dC4HTiT1W4uT5ydDxT3f/Q==",
       "hmac": "aHgW9F1zfw/uPVuVe4ecc4089tE=",
