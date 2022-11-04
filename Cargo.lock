@@ -676,8 +676,11 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "rick-and-morty",
+ "securestore",
  "serde_json",
+ "thiserror",
  "tokio",
+ "uuid",
  "warp",
 ]
 
@@ -940,6 +943,18 @@ checksum = "d53dcdb7c9f8158937a7981b48accfd39a43af418591a5d008c7b22b5e1b7ca4"
 dependencies = [
  "ring",
  "untrusted",
+]
+
+[[package]]
+name = "securestore"
+version = "0.100.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ffda2694eca0e525be62fb62660ec4e21995296f527c0bb83cf51a6ab8a80d2e"
+dependencies = [
+ "base64",
+ "openssl",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -1336,6 +1351,15 @@ name = "utf-8"
 version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09cc8ee72d2a9becf2f2febe0205bbed8fc6615b7cb429ad062dc7b7ddd036a9"
+
+[[package]]
+name = "uuid"
+version = "1.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "feb41e78f93363bb2df8b0e86a2ca30eed7806ea16ea0c790d757cf93f79be83"
+dependencies = [
+ "getrandom",
+]
 
 [[package]]
 name = "vcpkg"
