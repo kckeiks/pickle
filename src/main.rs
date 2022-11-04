@@ -1,6 +1,8 @@
 use clap::{Parser, Subcommand};
+use warp::{Filter, Rejection};
 
 use rick_and_morty::{character, episode, location};
+use rick_and_morty::location::Location;
 
 #[derive(Parser)]
 #[command(author, about, long_about = None)]
@@ -14,6 +16,7 @@ enum Commands {
     Character { id: Option<i64> },
     Episode { id: Option<i64> },
     Location { id: Option<i64> },
+    Proxy,
 }
 
 #[tokio::main]
@@ -71,6 +74,15 @@ async fn main() -> Result<(), String> {
                         .expect("Fetching all locations to succeed.")
                 );
             }
+        }
+        Commands::Proxy => {
+            let routes = warp::any().and_then(|| async {
+                let res = location::get(1).await.unwrap();
+                Ok::<String, Rejection>(serde_json::to_string(&res).unwrap())
+            });
+
+            warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
+            println!("shutting down..");
         }
     }
 
