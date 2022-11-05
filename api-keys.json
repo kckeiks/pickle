@@ -12,6 +12,11 @@
       "hmac": "eQA4UNpFlgR8aRS0zGklDtbLeUI=",
       "payload": "33iZ9CYAikxN5IkZdVhub+PODUFORF85PeHm0wudpAQK38DFYolynG4QZLxm5PG3"
     },
+    "pickle": {
+      "iv": "BZSRFh4fTFNPCqGcgnZgxw==",
+      "hmac": "cWAGCgI8iJYJManmYTEzfbOxLlg=",
+      "payload": "mler9/nhk1NiB8fLat0rOpPCShUXyJA/i88aZ0RsCcQocd+yCdjOffS9nc5isRvL"
+    },
     "ricky": {
       "iv": "dC4HTiT1W4uT5ydDxT3f/Q==",
       "hmac": "aHgW9F1zfw/uPVuVe4ecc4089tE=",

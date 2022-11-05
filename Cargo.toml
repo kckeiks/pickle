@@ -15,3 +15,5 @@ securestore = "0.100"
 uuid = { version = "1.2", features = ["v4"] }
 thiserror = "1.0"
 moka = { version = "0.9", features = ["future"] }
+log = "0.4"
+env_logger = "0.9"

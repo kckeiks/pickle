@@ -15,6 +15,7 @@ async fn fetch_location(id: i64, cache: Cache<String, String>, is_key_valid: boo
     let key = format!("location/{}", id);
     if let Some(val) = cache.get(&key) {
         if is_key_valid {
+            log::info!("Returning cached response.");
             return Response::new(val.into());
         }
     }
@@ -35,6 +36,7 @@ async fn fetch_location_all(cache: Cache<String, String>, is_key_valid: bool) ->
     let key = String::from("location-all");
     if let Some(val) = cache.get(&key) {
         if is_key_valid {
+            log::info!("Returning cached response.");
             return Response::new(val.into());
         }
     }
@@ -54,6 +56,7 @@ async fn fetch_character(id: i64, cache: Cache<String, String>, is_key_valid: bo
     let key = format!("character/{}", id);
     if let Some(val) = cache.get(&key) {
         if is_key_valid {
+            log::info!("Returning cached response.");
             return Response::new(val.into());
         }
     }
@@ -73,6 +76,7 @@ async fn fetch_character_all(cache: Cache<String, String>, is_key_valid: bool) -
     let key = String::from("character-all");
     if let Some(val) = cache.get(&key) {
         if is_key_valid {
+            log::info!("Returning cached response.");
             return Response::new(val.into());
         }
     }
@@ -92,6 +96,7 @@ async fn fetch_episode(id: i64, cache: Cache<String, String>, is_key_valid: bool
     let key = format!("episode/{}", id);
     if let Some(val) = cache.get(&key) {
         if is_key_valid {
+            log::info!("Returning cached response.");
             return Response::new(val.into());
         }
     }
@@ -111,6 +116,7 @@ async fn fetch_episode_all(cache: Cache<String, String>, is_key_valid: bool) -> 
     let key = String::from("episode-all");
     if let Some(val) = cache.get(&key) {
         if is_key_valid {
+            log::info!("Returning cached response.");
             return Response::new(val.into());
         }
     }
