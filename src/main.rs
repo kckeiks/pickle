@@ -1,6 +1,6 @@
 mod proxy;
 
-use clap::{Parser, Subcommand};
+use clap::{Args, Parser, Subcommand};
 use std::path::Path;
 
 use rick_and_morty::{character, episode, location};
@@ -25,26 +25,53 @@ pub enum Error {
 }
 
 #[derive(Parser)]
-#[command(author, about, long_about = None)]
+#[command(name = "pickle")]
+#[command(author = "Miguel Guarniz <mi9uel9@gmail.com>")]
 struct Cli {
     #[command(subcommand)]
-    character: Commands,
+    commands: Commands,
 }
 
 #[derive(Subcommand)]
 enum Commands {
-    Character { id: Option<i64> },
-    Episode { id: Option<i64> },
-    Location { id: Option<i64> },
-    SignUp { keyword: String },
-    Proxy,
+    /// Fetches characters.
+    Character {
+        /// Id of character to fetch. If not included, fetches all characters.
+        id: Option<i64>,
+    },
+    /// Fetches episodes.
+    Episode {
+        /// Id of episode to fetch. If not included, fetches all episodes.
+        id: Option<i64>,
+    },
+    /// Fetches locations.
+    Location {
+        /// Id of location to fetch. If not included, fetches all locations.
+        id: Option<i64>,
+    },
+    /// Returns an API key to use proxy cache.
+    SignUp {
+        /// Keyword will identify your key
+        keyword: String,
+    },
+    /// Starts the pickle proxy. You can use same paths as Rick and Morty API.
+    /// You need an API key to use the cache. Please see sign-up command.
+    ///
+    /// Example: localhost:3030/character/1 or localhost:3030/character.
+    Proxy(ProxyCommand),
+}
+
+#[derive(Args)]
+struct ProxyCommand {
+    #[arg(short, long, help = "Port number. Defaults to 3030.")]
+    port: Option<u16>,
 }
 
 #[tokio::main]
 async fn main() -> Result<()> {
     let cli = Cli::parse();
 
-    match cli.character {
+    match cli.commands {
         Commands::Character { id } => {
             if let Some(id) = id {
                 println!(
@@ -93,7 +120,7 @@ async fn main() -> Result<()> {
             }
         }
         Commands::SignUp { keyword } => sign_up(keyword)?,
-        Commands::Proxy => Proxy::new().run().await?,
+        Commands::Proxy(ProxyCommand { port }) => Proxy::new().run(port).await?,
     }
 
     Ok(())

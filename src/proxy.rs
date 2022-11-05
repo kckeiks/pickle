@@ -162,7 +162,7 @@ impl Proxy {
         }
     }
 
-    pub async fn run(self) -> Result<()> {
+    pub async fn run(self, port: Option<u16>) -> Result<()> {
         let cache = Cache::new(1000);
 
         let auth = warp::filters::header::optional::<String>("authorization");
@@ -241,7 +241,9 @@ impl Proxy {
             .or(episode_id)
             .or(episode_all);
 
-        warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
+        let port = port.unwrap_or(3030);
+        println!("Running on localhost:{}", port);
+        warp::serve(routes).run(([127, 0, 0, 1], port)).await;
 
         Ok(())
     }
