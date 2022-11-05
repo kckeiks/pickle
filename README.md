@@ -36,7 +36,20 @@ entropy of the random portion of the key (uuid v4).
 
 Key will allow you to use the cache of the proxy.
 
-Please read below for note about secret key.
+## Security 
+
+This crate uses [securestorage](https://docs.rs/securestore/latest/securestore/index.html)
+to encrypt and store API keys so we can version them along with the code.
+To make experimenting with this project simpler, the secret for the vault of
+API keys is versioned and included as well. If you wish, delete the secret and 
+use `ssclient` and generate a new secret.
+Please see docs in `securestorage` for `ssclient` command.
+
+In addition, for simplicity, the proxy connection is not encrypted so you 
+should consider upgrading the `warp` server that this program uses to 
+use TLS. You will need to manage your certificates :).
+
+**THUS, THIS IS NOT PRODUCTION SAFE.**
 
 ## Components
 
@@ -44,11 +57,7 @@ Please read below for note about secret key.
 This is simply a wrapper over `reqwest` so reduces boilerplate code.
 
 **[securestorage](https://docs.rs/securestore/latest/securestore/index.html)** - 
-This encrypts and stores API keys so we can version them. 
-To make experimenting with this project simpler, the secret for the vault of 
-API keys is versioned and included. **THUS, THIS IS NOT PRODUCTION SAFE.** If you wish,
-delete the secret and use `ssclient` with cargo and generate a new secret.
-Please see docs in `securestorage`.
+This encrypts and stores API keys so we can version them along with the code.
 
 **[moka](https://docs.rs/moka/latest/moka/)** - Concurrent cache library for Rust.
 
