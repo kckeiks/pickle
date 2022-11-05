@@ -18,10 +18,22 @@ There are similar commands for episodes and locations. Consult `--help`.
 ```bash
 cargo run proxy -p PORT_NUMBER
 ```
-Proxy runs on localhost. 
 
 ```curl
 curl 'http://localhost:3031/episode' -H 'Authorization: keyword-randomsequenceofbytes'
+```
+
+Proxy runs on localhost.
+
+Endpoints:
+
+```
+* /location
+* /location/id
+* /character
+* /character/id
+* /episode
+* /episode/id
 ```
 
 This command returns an API key.
