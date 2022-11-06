@@ -24,7 +24,7 @@ curl 'http://localhost:3031/episode' -H 'Authorization: <API-KEY>'
 ```
 
 Proxy runs on localhost. 
-Please include your API token in the `Authorization` header.
+Please include your API key in the `Authorization` header.
 
 Endpoints:
 
