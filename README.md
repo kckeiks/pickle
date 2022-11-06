@@ -20,10 +20,11 @@ cargo run proxy -p PORT_NUMBER
 ```
 
 ```curl
-curl 'http://localhost:3031/episode' -H 'Authorization: keyword-randomsequenceofbytes'
+curl 'http://localhost:3031/episode' -H 'Authorization: <API-KEY>'
 ```
 
-Proxy runs on localhost.
+Proxy runs on localhost. 
+Please include your API token in the `Authorization` header.
 
 Endpoints:
 
